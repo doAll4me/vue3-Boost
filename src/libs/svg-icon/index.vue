@@ -7,21 +7,21 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed } from 'vue';
 const props = defineProps({
   // 显示的svg
   name: {
     type: String,
-    required: true,
+    required: true
   },
   // svg图标的颜色
   color: {
-    type: String,
+    type: String
   },
   // tailwind指定svg颜色的类名
   fillClass: {
-    type: String,
-  },
+    type: String
+  }
 });
 
 // 计算属性（给icon的name加一个‘#icon-’，后续可以直接获取icon文件

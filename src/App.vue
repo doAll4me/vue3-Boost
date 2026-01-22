@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <m-button type="info">你好</m-button> -->
     <!-- {{ isMobileTerminal }} -->
     <router-view></router-view>
   </div>

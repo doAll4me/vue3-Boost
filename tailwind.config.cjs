@@ -1,22 +1,31 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       // 修改fontSize预设大小
       fontSize: {
-        xs: ["0.25rem", "0.35rem"],
-        sm: ["0.35rem", "0.45rem"],
-        base: ["0.45rem", "0.55rem"],
-        lg: ["0.55rem", "0.65rem"],
-        xl: ["0.65rem", "0.75rem"],
+        xs: ['0.25rem', '0.35rem'],
+        sm: ['0.35rem', '0.45rem'],
+        base: ['0.45rem', '0.55rem'],
+        lg: ['0.55rem', '0.65rem'],
+        xl: ['0.65rem', '0.75rem']
       },
 
       // 阴影
       boxShadow: {
-        "l-white": "-10px 0 10px white",
+        'l-white': '-10px 0 10px white'
       },
-    },
+      height: {
+        header: '72px',
+        // 使用calc，运算符两边必须有空格
+        main: 'calc(100vh - 72px)'
+      },
+      colors: {
+        main: '#f44c58',
+        'hover-main': '$f3283'
+      }
+    }
   },
-  plugins: [],
+  plugins: []
 };
