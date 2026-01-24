@@ -35,9 +35,10 @@ const EMITS_CLICK = 'click';
 // 1.构建type风格可选项  size大小可选项
 // type可选项
 const typeEnum = {
-  primary: 'text-white bg-zinc-800 hover:bg-zinc-900 active:bg-zinc-800',
-  main: 'text-white bg-main hover:bg-hover-main action:bg-main',
-  info: 'text-zinc-800 bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200'
+  primary:
+    'text-white bg-zinc-800 dark:bg-zinc-900 hover:bg-zinc-900 dark:hover:bg-zinc-700 active:bg-zinc-800 dark:active:bg-zinc-700',
+  main: 'text-white bg-main dark:bg-zinc-900 hover:bg-hover-main dark:hover:bg-zinc-700 action:bg-main dark:active:bg-zinc-700',
+  info: 'text-zinc-800 bg-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 active:bg-zinc-200 dark:active:bg-zinc-700'
 };
 
 // size可选项

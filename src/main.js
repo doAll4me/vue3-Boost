@@ -6,8 +6,10 @@ import router from './router';
 import store from './store';
 import './styles/index.scss';
 import { useRem } from './utils/flexible';
+import useTheme from './utils/theme';
 
 useRem();
+useTheme();
 const app = createApp(App);
 app.use(router);
 app.use(store);

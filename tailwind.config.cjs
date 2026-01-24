@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // 手动切换暗黑模式
+  darkMode: 'class',
+  // tailwind应用
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -14,7 +17,8 @@ module.exports = {
 
       // 阴影
       boxShadow: {
-        'l-white': '-10px 0 10px white'
+        'l-white': '-10px 0 10px white',
+        'l-zinc': '-10px 0 10px #18181b'
       },
       height: {
         header: '72px',
