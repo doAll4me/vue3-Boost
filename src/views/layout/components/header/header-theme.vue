@@ -1,5 +1,5 @@
 <template>
-  <m-popover placement="bottom-right">
+  <m-popover placement="bottom-left">
     <!--具名插槽：触发弹窗的内容 -->
     <template #reference>
       <m-svg-icon

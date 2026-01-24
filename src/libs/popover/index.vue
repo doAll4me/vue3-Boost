@@ -33,7 +33,7 @@ const PROP_BOTTOM_RIGHT = 'bottom-right';
 const placementEnum = [PROP_TOP_LEFT, PROP_TOP_RIGHT, PROP_BOTTOM_LEFT, PROP_BOTTOM_RIGHT];
 
 // 延长弹窗关闭时间
-const DELAY_TIME = 500;
+const DELAY_TIME = 100;
 </script>
 
 <script setup>
