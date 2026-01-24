@@ -8,8 +8,8 @@
         @click="onToHome"
       />
       <header-search-vue class="mr-1"></header-search-vue>
-      <header-my-vue class="mr-1"></header-my-vue>
       <header-theme-vue></header-theme-vue>
+      <header-my-vue class="mr-1"></header-my-vue>
     </div>
   </div>
 </template>

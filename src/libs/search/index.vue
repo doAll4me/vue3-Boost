@@ -133,9 +133,7 @@ const onBlurHandler = () => {
 <style lang="scss" scoped>
 .slide-enter-active,
 .slide-leave-active {
-  transition:
-    all 0,
-    5s;
+  transition: all 0.5s;
 }
 
 .slide-enter-from,
