@@ -21,7 +21,7 @@
 
       <!-- fontsize设置固定值会很呆，每个手机的大小都不一样，所以要用rem去重新设置一下（flexible.js里 -->
       <li
-        v-for="(item, index) in categoryData"
+        v-for="(item, index) in $store.getters.categorys"
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :class="{
@@ -36,7 +36,7 @@
 
     <!--  汉堡按钮弹窗 -->
     <m-popup v-model="isVisible">
-      <menu-vue :categories="categoryData" @onItemClick="onItemClick"></menu-vue>
+      <menu-vue @onItemClick="onItemClick"></menu-vue>
     </m-popup>
     <!-- v-model会自动监听 update:modelValue 并赋值isVisible = $event，等同于：
           <m-popup
@@ -51,12 +51,6 @@
 import MenuVue from '@/views/main/components/menu/index.vue';
 import { useScroll } from '@vueuse/core';
 import { onBeforeUpdate, ref, watch } from 'vue';
-defineProps({
-  categoryData: {
-    type: Array,
-    required: true
-  }
-});
 
 // 控制popup展示
 const isVisible = ref(false);

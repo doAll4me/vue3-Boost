@@ -1,0 +1,20 @@
+import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+import getters from './getters';
+import category from './modules/category';
+const store = createStore({
+  getters,
+  modules: {
+    category
+  },
+  plugins: [
+    createPersistedState({
+      // 指定保存到localstorage中的key（名字
+      key: 'imooc-front',
+      // 需要保存的模块
+      path: ['category']
+    })
+  ]
+});
+
+export default store;
