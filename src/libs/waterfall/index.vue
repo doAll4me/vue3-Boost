@@ -26,8 +26,15 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onMounted, ref, watch } from 'vue';
-import { getAllImg, getImgElements, onComplateImgs } from './utils';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import {
+  getAllImg,
+  getImgElements,
+  getMaxHeight,
+  getMinHeight,
+  getMinHeightColumn,
+  onComplateImgs
+} from './utils';
 const props = defineProps({
   // 数据源
   data: {
@@ -133,7 +140,7 @@ const waitImgComplate = () => {
     itemElements.forEach((el) => {
       itemHeights.push(el.offsetHeight);
     });
-    console.log('itemHeights(inside then):', itemHeights);
+    // console.log('itemHeights(inside then):', itemHeights);
     // 渲染位置
     useItemLocation();
   });
@@ -169,35 +176,100 @@ const useItemLocation = () => {
     item._style = {};
     // 计算组件应该在的位置
     // left
-    item._style.left =
-      // top
-      item._style.top;
+    item._style.left = getItemLeft();
+    // top
+    item._style.top = getItemTop();
+
+    // 加了item的列的高度需要增加
+    increasingHeight(index);
   });
+
+  // 容器的高度也需要增加:容器的高度===max的列高
+  containerHeight.value = getMaxHeight(columnHeightObj.value);
 };
 
+// 在组件销毁时，清除所有item的_style
+onUnmounted(() => {
+  props.data.forEach((item) => {
+    delete item._style;
+  });
+});
+
 // 返回下一个item的left
-const getItemLeft=()=>{
-  
-}
+const getItemLeft = () => {
+  //拿到最小高度的列
+  const column = getMinHeightColumn(columnHeightObj.value);
+  // column是索引，同时对应了该列前面还有多少列，有多少列就要乘多少个宽度
+  return column * (columnWidth.value + props.columnSpacing) + containerLeft.value;
+  // 前面已经有多少列 × （每列占的宽度）+容器的左边距===当前item的左边距
+};
+
+// 返回下一个item的top
+const getItemTop = () => {
+  //拿到列对象里的最小高度，就是当前item的top值
+  return getMinHeight(columnHeightObj.value);
+};
+
+// 指定列高度自增
+const increasingHeight = (index) => {
+  // 得到高度最小的列（最小的列才会加item，才需要增加高度
+  const minHeightColumn = getMinHeightColumn(columnHeightObj.value);
+  // 该列增高(加上所加item的高度，以及行间距)
+  columnHeightObj.value[minHeightColumn] += itemHeights[index] + props.rowSpacing;
+};
 
 // 触发item计算高度
 watch(
-  () => props.data.length,
-  async (len) => {
-    if (!len) return; //没数据就return
-    if (!columnWidth.value) return; //没数据就return
+  () => props.data,
+  (newVal) => {
+    // 防止组件还没加载完
+    nextTick(() => {
+      // 每次获取到新数据 都要重新构建高度记录
+      const resetColumnHeight = newVal.every((item) => !item._style);
+      if (resetColumnHeight) {
+        useColumnHeightObj();
+      }
 
-    await nextTick(); //防止组件还没加载完
-
-    if (props.picturePreReading) {
-      //如果需要图片预加载
-      await waitImgComplate();
-    } else {
-      // 如果不需要图片预加载
-      useItemHeight();
-    }
+      if (props.picturePreReading) {
+        //如果需要图片预加载
+        waitImgComplate();
+      } else {
+        // 如果不需要图片预加载
+        useItemHeight();
+      }
+    });
   },
-  { immediate: true }
+  { deep: true, immediate: true }
+);
+
+// 重新构建瀑布流（重新渲染
+const reset = () => {
+  // 设置定时器再计算列宽 再渲染，不然一切换设备就计算会出错
+  setTimeout(() => {
+    //重新计算列宽
+    useColumnWidth();
+    // 重置item的定位数据
+    props.data.forEach((item) => {
+      delete item._style;
+    });
+  }, 200);
+};
+
+// 监听column列数的变化（切换移动端pc端
+watch(
+  () => props.column,
+  () => {
+    if (props.picturePreReading) {
+      columnWidth.value = 0; //初始化item宽度
+      // 重新渲染item(数据改变后 视图改变后)
+      // 重新计算列宽
+      reset(); //反复切换后列宽会不稳定的更改
+    } else {
+      // 不需要图片预加载时，直接使用浏览器返回的图片高度和宽度计算
+      // 所以不用自己计算图片的宽高，可以直接reset
+      reset();
+    }
+  }
 );
 </script>
 

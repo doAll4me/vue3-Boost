@@ -7,6 +7,7 @@
       >
         <!-- 头像 -->
         <img
+          v-lazy
           class="w-3 h-3 rounded-sm"
           src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800"
           alt=""

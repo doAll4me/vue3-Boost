@@ -36,3 +36,24 @@ export const onComplateImgs = (imgs) => {
   // 等 p1、p2、p3 全部完成之后，Promise.all再一次性告诉你：全部好了
   return Promise.all(promiseAll);
 };
+
+// 返回列高度对象中最小的高度
+export const getMinHeight = (columnHeightObj) => {
+  const columnHeightArr = Object.values(columnHeightObj);
+  return Math.min(...columnHeightArr);
+};
+
+// 返回最小高度的列
+export const getMinHeightColumn = (columnHeightObj) => {
+  // 拿到最小的高度
+  const minHeight = getMinHeight(columnHeightObj);
+  return Object.keys(columnHeightObj).find((key) => {
+    return columnHeightObj[key] === minHeight;
+  });
+};
+
+// 返回列高度对象中最大的高度
+export const getMaxHeight = (columnHeightObj) => {
+  const columnHeightArr = Object.values(columnHeightObj);
+  return Math.max(...columnHeightArr);
+};

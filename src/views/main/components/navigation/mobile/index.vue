@@ -6,7 +6,7 @@
     >
       <!-- 汉堡按钮 -->
       <li
-        class="fixed top-[12.5px] right-[-1px] h-4 px-1 items-center bg-white dark:bg-zinc-900 z-20 shadow-l-white dark:shadow-l-zinc"
+        class="fixed top-[12.5px] right-[-1px] h-2 px-1 items-center bg-white dark:bg-zinc-900 z-20 shadow-l-white dark:shadow-l-zinc"
         @click="onShowPopup"
       >
         <m-svg-icon name="hamburger" class="w-1.5 h-1.5"></m-svg-icon>

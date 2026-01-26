@@ -6,7 +6,7 @@ export default {
     // app.component('m-popup', popup);
 
     // 组件自动注册
-    //1.获取当前路径下所有文件夹中的index.vue
+    //1.获取当前路径下所有文件夹中的index.vue(glob是一个异步方法，适用于组件)
     const components = import.meta.glob('./*/index.vue');
     // console.log(components);
     // 2.遍历获取所有组件
