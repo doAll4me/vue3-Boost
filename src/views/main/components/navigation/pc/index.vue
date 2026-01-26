@@ -22,9 +22,9 @@
         class="shrink-0 px-1.5 py-0 z-10 duration-200 text-zinc-900 dark:text-zinc-500 text-base font-bold h-4 leading-4 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-900 rounded mr-1 mb-1"
         :class="{
           'text-zinc-900 dark:text-zinc-300 bg-zinc-200 dark:bg-zinc-900':
-            currentCategoryIndex === index
+            $store.getters.currentCategoryIndex === index
         }"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -34,6 +34,11 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
+
+// 导入目前所选目录
+const store = useStore();
+
 // 目录展开和关闭状态
 const isOpenCategory = ref(false);
 // 点击箭头切换目录展开收起函数
@@ -43,9 +48,10 @@ const triggerState = () => {
 
 // 点击目录分类高亮
 // 选中目录
-const currentCategoryIndex = ref(0);
-const onItemClick = (index) => {
-  currentCategoryIndex.value = index;
+// const currentCategoryIndex = ref(0);
+const onItemClick = (item) => {
+  // currentCategoryIndex.value = index;
+  store.commit('app/changeCurrentCategory', item);
 };
 </script>
 

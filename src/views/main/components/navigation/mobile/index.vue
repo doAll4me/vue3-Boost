@@ -25,10 +25,10 @@
         :key="item.id"
         class="shrink-0 px-1.5 py-0.5 z-10 duration-200 last:mr-4"
         :class="{
-          'text-zinc-100': currentCategoryIndex === index
+          'text-zinc-100': $store.getters.currentCategoryIndex === index
         }"
         :ref="setItemRef"
-        @click="onItemClick(index)"
+        @click="onItemClick(item)"
       >
         {{ item.name }}
       </li>
@@ -51,6 +51,7 @@
 import MenuVue from '@/views/main/components/menu/index.vue';
 import { useScroll } from '@vueuse/core';
 import { onBeforeUpdate, ref, watch } from 'vue';
+import { useStore } from 'vuex';
 
 // 控制popup展示
 const isVisible = ref(false);
@@ -66,7 +67,8 @@ const sliderStyle = ref({
 });
 
 // 选中item下标
-const currentCategoryIndex = ref(0);
+// const currentCategoryIndex = ref(0);
+const store = useStore();
 
 // 获取选中item的下标
 let itemRefs = [];
@@ -87,19 +89,23 @@ const ulTarget = ref(null);
 const { x: ulScrollLeft } = useScroll(ulTarget); //解构赋值 改名
 
 // 监听item变化，当currentCategoryIndex发生变化时，获取item下标元素的left和width，计算sliderStyle并更新，即可实现滑块的滚动
-watch(currentCategoryIndex, (val) => {
-  const { width, left } = itemRefs[val].getBoundingClientRect();
-  // console.log(rect);
-  sliderStyle.value = {
-    //滑块的位置 = ul 横向滚动的位置 + 当前元素的 left
-    transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
-    width: width + 'px'
-  };
-});
+watch(
+  () => store.getters.currentCategoryIndex,
+  (val) => {
+    const { width, left } = itemRefs[val].getBoundingClientRect();
+    // console.log(rect);
+    sliderStyle.value = {
+      //滑块的位置 = ul 横向滚动的位置 + 当前元素的 left
+      transform: `translateX(${ulScrollLeft.value + left - 10}px)`,
+      width: width + 'px'
+    };
+  }
+);
 
 // 监听item的选择（nav栏选择不同目录
-const onItemClick = (index) => {
-  currentCategoryIndex.value = index;
+const onItemClick = (item) => {
+  // currentCategoryIndex.value = index;
+  store.commit('app/changeCurrentCategory', item);
   isVisible.value = false; //在弹出菜单中选择后关闭蒙层
 };
 </script>

@@ -2,5 +2,13 @@
 export default {
   // 简单访问
   categorys: (state) => state.category.categorys,
-  themeType: (state) => state.theme.themeType
+  themeType: (state) => state.theme.themeType,
+  currentCategory: (state) => state.app.currentCategory, //选中目录项
+  currentCategoryIndex: (state, getters) => {
+    //选中项目录的下标
+    // 根据选中项计算index值
+    return getters.categorys.findIndex((item) => {
+      return item.id === getters.currentCategory.id;
+    });
+  }
 };
