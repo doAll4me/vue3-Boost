@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1">
+  <div class="flex-1 guide-search">
     <m-search v-model="inputValue" @search="onSearchHandler">
       <template #dropdown>
         <div>
