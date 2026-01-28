@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <m-message type="success" content="测试" duration="1000"></m-message> -->
     <!-- <m-confirm></m-confirm> -->
     <!-- <m-button type="info">你好</m-button> -->
     <!-- {{ isMobileTerminal }} -->
