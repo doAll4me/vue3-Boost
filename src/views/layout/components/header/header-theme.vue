@@ -55,7 +55,7 @@ const svgIconName = computed(() => {
     return item.type === store.getters.themeType;
   });
   // console.log(findTheme);
-  return findTheme?.icon;
+  return findTheme?.icon || THEME_LIGHT;
 });
 // 4.根据vuex中保存的主题 修改html中的class(utils中的theme)
 

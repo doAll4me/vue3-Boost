@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <m-confirm></m-confirm> -->
     <!-- <m-button type="info">你好</m-button> -->
     <!-- {{ isMobileTerminal }} -->
     <!-- 一级路由出口 -->

@@ -6,3 +6,13 @@ export const getPexelsList = (data) => {
     params: data
   });
 };
+
+// search提示词
+export const getHint = (q) => {
+  return request.get('/pexels/hint', { params: { q } });
+};
+
+// 获取推荐主题
+export const getThemes = () => {
+  return request.get('/pexels/themes');
+};
