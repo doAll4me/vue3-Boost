@@ -7,6 +7,7 @@
       :style="{
         backgroundColor: randomRGB()
       }"
+      @click="onToPinsClick"
     >
       <!-- 图片 -->
       <img
@@ -69,9 +70,9 @@
 <script setup>
 import { message } from '@/libs';
 import { randomRGB } from '@/utils/color';
-import { useFullscreen } from '@vueuse/core';
+import { useElementBounding, useFullscreen } from '@vueuse/core';
 import { saveAs } from 'file-saver';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps({
   data: {
@@ -82,6 +83,8 @@ const props = defineProps({
     type: Number
   }
 });
+
+const emits = defineEmits(['click']);
 
 // 下载按钮对应事件
 const onDownload = () => {
@@ -95,6 +98,28 @@ const onDownload = () => {
 const imgTarget = ref(null);
 const { enter: onImgFullScreen } = useFullscreen(imgTarget);
 
+// pins跳转记录（记录item中心点的位置
+const {
+  x: imgContainerX,
+  y: imgContainerY,
+  width: imgContainerWidth,
+  height: imgContainerHeight
+} = useElementBounding(imgTarget);
+const imgContainerCenter = computed(() => {
+  // 获取中心点(left+宽的一半，top+高的一半)
+  return {
+    translateX: parseInt(imgContainerX.value + imgContainerWidth.value / 2),
+    translateY: parseInt(imgContainerY.value + imgContainerHeight.value / 2)
+  };
+});
+
+// 进入item详情点击事件
+const onToPinsClick = () => {
+  emits('click', {
+    id: props.data.id,
+    location: imgContainerCenter.value
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -12,19 +12,28 @@
       >
         <!-- 插槽：一个插槽对应一个item -->
         <template v-slot="{ item, width }">
-          <item-vue :data="item" :width="width"></item-vue>
+          <item-vue :data="item" :width="width" @click="onToPins"></item-vue>
         </template>
       </m-waterfall>
     </m-infinite>
+
+    <!-- pins详情内容展示 -->
+    <transition :css="false" @beforeEnter="beforeEnter" @enter="enter" @leave="leave">
+      <pins-vue v-if="isVisible" :id="currentPins.id"></pins-vue>
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { isMobileTerminal } from '@/utils/flexible';
+import pinsVue from '@/views/pins/components/pins.vue';
+import { useEventListener } from '@vueuse/core';
+import gsap from 'gsap';
 import { ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { getPexelsList } from '../../../../api/pexels';
 import itemVue from './item.vue';
+
 // loading状态 （数据是否在加载中
 const loading = ref(false);
 // isFinished状态 （数据是否全部加载完成
@@ -102,6 +111,73 @@ watch(
     });
   }
 );
+
+// 控制pins展示
+const isVisible = ref(false);
+// 记录当前选中的pins对象属性
+const currentPins = ref({});
+
+// 监听浏览器后退事件
+useEventListener(window, 'popstate', () => {
+  isVisible.value = false;
+});
+
+// 进入pins
+const onToPins = (item) => {
+  // console.log(item);
+  // 修改浏览器url（修改但不跳转
+  // 三个参数 state(状态对象) title(大多数忽略) url(新的url)
+  history.pushState(null, null, `pins/${item.id}`);
+  isVisible.value = true;
+  currentPins.value = item;
+};
+
+// 跳转动画钩子
+// 跳转前
+const beforeEnter = (el) => {
+  gsap.set(el, {
+    scaleX: 0,
+    scaleY: 0,
+    transformOrigin: '0 0',
+    translateX: currentPins.value.location?.translateX,
+    translateY: currentPins.value.location?.translateY,
+    opacity: 0
+  });
+};
+// 跳转,进入
+const enter = (el, done) => {
+  gsap.to(el, {
+    //动画时长
+    duration: 0.3,
+    // 完全展开
+    scaleX: 1,
+    scaleY: 1,
+    // 展开后位置
+    translateX: 0,
+    translateY: 0,
+    // 展开后透明度
+    opacity: 1,
+    // 完成后的回调
+    onComplete: done
+  });
+};
+// 关闭后的状态
+const leave = (el, done) => {
+  gsap.to(el, {
+    //动画时长
+    duration: 0.3,
+    // 完全关闭
+    scaleX: 0,
+    scaleY: 0,
+    // 关闭后位置
+    translateX: currentPins.value.location?.translateX,
+    translateY: currentPins.value.location?.translateY,
+    // 关闭后透明度
+    opacity: 0,
+    // 完成后的回调
+    onComplete: done
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>
