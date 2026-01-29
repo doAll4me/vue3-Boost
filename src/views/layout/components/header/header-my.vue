@@ -4,6 +4,7 @@
     <template #reference>
       <div
         class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
+        v-if="false"
       >
         <!-- 头像 -->
         <img
@@ -21,9 +22,15 @@
         <!-- vip图标 -->
         <m-svg-icon class="h-1.5 w-1.5 absolute right-[16px] bottom-0" name="vip"></m-svg-icon>
       </div>
+
+      <!-- 没登录时显示登录按钮 -->
+      <div v-else>
+        <m-button class="guide-my" icon="profile" iconColor="#fff" @click="onToLogin"></m-button>
+      </div>
     </template>
+
     <!-- 匿名插槽：弹窗显示内容(气泡) -->
-    <div class="w-[140px] overflow-hidden">
+    <div v-if="false" class="w-[140px] overflow-hidden">
       <!-- 根据themeArr进行多次渲染 -->
       <div
         v-for="item in menuArr"
@@ -42,11 +49,19 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
 const menuArr = [
   { id: '0', title: '个人资料', icon: 'profile', path: '/profile' },
   { id: '1', title: '升级VIP', icon: 'vip-profile', path: '/member' },
   { id: '2', title: '退出登录', icon: 'logout', path: '' }
 ];
+
+const router = useRouter();
+// 登录按钮点击事件
+const onToLogin = () => {
+  router.push('./login');
+};
 </script>
 
 <style lang="scss" scoped></style>
