@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <m-input class="z-50 w-[300px]" v-model="text" max="50"></m-input> -->
     <!-- <m-message type="success" content="测试" duration="1000"></m-message> -->
     <!-- <m-confirm></m-confirm> -->
     <!-- <m-button type="info">你好</m-button> -->
@@ -11,6 +12,9 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+const text = ref('');
+</script>
 
 <style lang="scss" scoped></style>

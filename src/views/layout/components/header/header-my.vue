@@ -61,9 +61,9 @@ import { useStore } from 'vuex';
 const store = useStore();
 
 const menuArr = [
-  { id: '0', title: '个人资料', icon: 'profile', path: '/profile' },
-  { id: '1', title: '升级VIP', icon: 'vip-profile', path: '/member' },
-  { id: '2', title: '退出登录', icon: 'logout', path: '' }
+  { id: 0, title: '个人资料', icon: 'profile', path: '/profile' },
+  { id: 1, title: '升级VIP', icon: 'vip-profile', path: '/member' },
+  { id: 2, title: '退出登录', icon: 'logout', path: '' }
 ];
 
 const router = useRouter();
@@ -75,11 +75,14 @@ const onToLogin = () => {
 // menu点击事件
 const onItemClick = (item) => {
   // 退出登录
-  if (item.id === '2') {
+  if (item.id === 2) {
     // 退出确认提示
     confirm('您确定退出登录吗？').then(() => {
       store.dispatch('user/logout');
     });
+    return;
+  } else if (item.id === 0) {
+    router.push('/profile');
   }
 };
 </script>
