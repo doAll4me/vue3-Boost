@@ -1,7 +1,7 @@
 // 跟用户相关的store
 import { message } from '@/libs';
 import md5 from 'md5';
-import { getProfile, loginUser } from '../../api/sys';
+import { getProfile, loginUser, registerUser } from '../../api/sys';
 export default {
   namespaced: true,
   state: () => ({
@@ -21,6 +21,16 @@ export default {
     }
   },
   actions: {
+    // 注册
+    async register(context, payload) {
+      const { password } = payload;
+      return await registerUser({
+        ...payload,
+        // 密码需要md5进行加密
+        password: password ? md5(password) : ''
+      });
+    },
+
     // 登录
     async login(context, payload) {
       const { password } = payload;

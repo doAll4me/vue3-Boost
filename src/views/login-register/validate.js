@@ -28,3 +28,17 @@ export const validatePassword = (val) => {
   }
   return true;
 };
+
+/**
+ * 确认密码表单校验，要关联密码，所以需要注册这个校验规则
+ * 1.定义方法
+ * 2.注册这个校验
+ */
+export const validateConfirmPassword = (val, password) => {
+  // console.log(v1);代表输入的值
+  // console.log(v2);代表绑定的值
+  if (val !== password[0]) {
+    return '两次密码输入不一致';
+  }
+  return true;
+};
