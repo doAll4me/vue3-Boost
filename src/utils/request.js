@@ -30,6 +30,7 @@ service.interceptors.request.use(
 
 // 响应拦截器
 service.interceptors.response.use(
+  // 服务器返回200状态码
   (response) => {
     const { success, message, data } = response.data;
     if (success) {
@@ -38,7 +39,13 @@ service.interceptors.response.use(
     }
     return Promise.reject(new Error(message));
   },
+  // 服务端返回非200的状态码
   (error) => {
+    // 处理token超时的情况
+    if (error.response && error.response.data && error.response.data.code === 401) {
+      // 退出
+      store.dispatch('user/logout');
+    }
     return Promise.reject(error);
   }
 );
