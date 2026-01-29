@@ -4,13 +4,13 @@
     <template #reference>
       <div
         class="relative flex items-center p-0.5 rounded-sm cursor-pointer duration-200 outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900"
-        v-if="false"
+        v-if="$store.getters.token"
       >
         <!-- 头像 -->
         <img
           v-lazy
           class="guide-my w-3 h-3 rounded-sm"
-          src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800"
+          :src="$store.getters.userInfo.avatar"
           alt=""
         />
         <!-- 下箭头 -->
@@ -20,7 +20,11 @@
           fillClass="fill-zinc-900 dark:fill-zinc-300"
         ></m-svg-icon>
         <!-- vip图标 -->
-        <m-svg-icon class="h-1.5 w-1.5 absolute right-[16px] bottom-0" name="vip"></m-svg-icon>
+        <m-svg-icon
+          v-if="$store.getters.userInfo.vipLevel"
+          class="h-1.5 w-1.5 absolute right-[16px] bottom-0"
+          name="vip"
+        ></m-svg-icon>
       </div>
 
       <!-- 没登录时显示登录按钮 -->
@@ -30,12 +34,13 @@
     </template>
 
     <!-- 匿名插槽：弹窗显示内容(气泡) -->
-    <div v-if="false" class="w-[140px] overflow-hidden">
+    <div v-if="$store.getters.token" class="w-[140px] overflow-hidden">
       <!-- 根据themeArr进行多次渲染 -->
       <div
         v-for="item in menuArr"
         :key="item.id"
         class="flex items-center p-1 cursor-pointer rounded hover:bg-zinc-100/60 dark:hover:bg-zinc-800"
+        @click="onItemClick(item)"
       >
         <m-svg-icon
           :name="item.icon"
@@ -49,7 +54,11 @@
 </template>
 
 <script setup>
+import { confirm } from '@/libs';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const menuArr = [
   { id: '0', title: '个人资料', icon: 'profile', path: '/profile' },
@@ -61,6 +70,17 @@ const router = useRouter();
 // 登录按钮点击事件
 const onToLogin = () => {
   router.push('./login');
+};
+
+// menu点击事件
+const onItemClick = (item) => {
+  // 退出登录
+  if (item.id === '2') {
+    // 退出确认提示
+    confirm('您确定退出登录吗？').then(() => {
+      store.dispatch('user/logout');
+    });
+  }
 };
 </script>
 

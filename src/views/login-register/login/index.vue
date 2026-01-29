@@ -20,6 +20,7 @@
           placeholder="用户名"
           autocomplete="on"
           :rules="validateUsername"
+          v-model="loginForm.username"
         />
         <VeeErrorMessage class="text-sm text-red-600 block mt-0.5 text-left" name="username" />
         <!-- 密码 -->
@@ -30,6 +31,7 @@
           placeholder="密码"
           autocomplete="on"
           :rules="validatePassword"
+          v-model="loginForm.password"
         />
         <VeeErrorMessage class="text-sm text-red-600 block mt-0.5 text-left" name="password" />
 
@@ -41,7 +43,10 @@
           >
         </div>
         <!-- 登录按钮 -->
-        <m-button class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800" :isActiveAnim="false"
+        <m-button
+          class="w-full dark:bg-zinc-900 xl:dark:bg-zinc-800"
+          :isActiveAnim="false"
+          :loading="loading"
           >登录</m-button
         >
       </VeeForm>
@@ -65,11 +70,17 @@
 </template>
 
 <script setup>
+import { LOGIN_TYPE_USERNAME } from '@/constants';
 import { ErrorMessage as VeeErrorMessage, Field as VeeField, Form as VeeForm } from 'vee-validate';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import headerVue from '../component/header.vue';
 import { validatePassword, validateUsername } from '../validate';
 import SliderCaptchaVue from './slider-captcha.vue';
+
+const store = useStore();
+const router = useRouter();
 
 // 控制sliderCaptcha展示
 const isSliderCaptchaVisible = ref(false);
@@ -84,7 +95,29 @@ const onLoginHandler = () => {
 const onCaptchaSuccess = () => {
   isSliderCaptchaVisible.value = false;
   // 登录操作
-  console.log('开始登录');
+  // console.log('开始登录');
+  onLogin();
+};
+
+// 用户登录行为
+const loading = ref(false);
+const loginForm = ref({
+  username: 'LGD_Sunday',
+  password: '123123'
+});
+const onLogin = async () => {
+  loading.value = true;
+  try {
+    await store.dispatch('user/login', {
+      ...loginForm.value,
+      loginType: LOGIN_TYPE_USERNAME
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+  router.push('/');
 };
 </script>
 
