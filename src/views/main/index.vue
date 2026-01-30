@@ -52,8 +52,11 @@ import navigationVue from './components/navigation/index.vue';
 const store = useStore();
 const router = useRouter();
 
-// 点击vip的事件
-const onVipClick = () => {};
+// 点击vip的事件 跳转会员支付页面
+const onVipClick = () => {
+  store.commit('app/changeRouterType', 'push');
+  router.push('/member');
+};
 
 // 点击 我的 事件
 const onMyClick = () => {

@@ -43,7 +43,7 @@ const onClickLeft = () => {
   // console.log('点击left');
 
   if (props.clickLeft) {
-    prop.clickLeft();
+    props.clickLeft();
     return;
   }
   router.back();

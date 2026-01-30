@@ -1,4 +1,4 @@
-import { isMobileTerminal } from '../utils/flexible';
+import { isMobileTerminal } from '@/utils/flexible';
 // 外部供应资源
 export default {
   // 简单访问
@@ -23,7 +23,7 @@ export default {
   // 路由跳转方式
   routerType: (state) => {
     // PC端没有跳转动画
-    if (!isMobileTerminal) {
+    if (!isMobileTerminal.value) {
       return 'none';
     }
     return state.app.routerType;
