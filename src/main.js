@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import mDirectives from './directives';
 import mLibs from './libs';
+import './permission';
 import router from './router';
 import store from './store';
 import './styles/index.scss';

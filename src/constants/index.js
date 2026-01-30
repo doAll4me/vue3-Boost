@@ -118,3 +118,7 @@ export const THEME_SYSTEM = 'THEME_SYSTEM';
 export const LOGIN_TYPE_USERNAME = 'username';
 export const LOGIN_TYPE_QQ = 'qq';
 export const LOGIN_TYPE_WECHAT = 'wechat';
+// 存储桶所在区域
+export const REGION = 'oss-cn-beijing';
+// 存储桶名字
+export const BUCKET = 'imooc-front';

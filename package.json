@@ -11,7 +11,10 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.19",
     "@vueuse/core": "^14.1.0",
+    "ali-oss": "^6.17.0",
     "axios": "^1.13.2",
+    "cos-js-sdk-v5": "^1.10.1",
+    "cropperjs": "^1.5.12",
     "driver.js": "^1.4.0",
     "file-saver": "^2.0.5",
     "gsap": "^3.14.2",
