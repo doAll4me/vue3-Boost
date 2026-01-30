@@ -131,6 +131,7 @@ const onRegHandler = async () => {
 
 // 跳转登录页面
 const onToLogin = () => {
+  store.commit('app/changeRouterType', 'push');
   router.push('/login');
 };
 </script>

@@ -63,7 +63,7 @@ watch(
   transition: all 0.3s;
 }
 // 准备进入，离开完成
-.fade-enter-form,
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }
@@ -73,7 +73,7 @@ watch(
   transition: all 0.3s;
 }
 // 最初和最终的状态
-.popup-down-up-enter-form,
+.popup-down-up-enter-from,
 .popup-down-up-leave-to {
   transform: translateY(100%);
 }

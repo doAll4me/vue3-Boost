@@ -85,6 +85,7 @@ getPexelData();
 
 // 关闭详情页面
 const onPop = () => {
+  store.commit('app/changeRouterType', 'back');
   router.back();
 };
 </script>

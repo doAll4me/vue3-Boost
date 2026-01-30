@@ -125,7 +125,8 @@ const router = useRouter();
 
 // 移动端下navbar左侧点击事件
 const onNavbarLeftClick = () => {
-  router.push('/');
+  store.commit('app/changeRouterType', 'back');
+  router.back();
 };
 
 // 移动端下的退出登录

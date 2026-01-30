@@ -69,6 +69,8 @@ const menuArr = [
 const router = useRouter();
 // 登录按钮点击事件
 const onToLogin = () => {
+  // 移动端下跳转动画类型
+  store.commit('app/changeRouterType', 'push');
   router.push('./login');
 };
 
@@ -82,6 +84,7 @@ const onItemClick = (item) => {
     });
     return;
   } else if (item.id === 0) {
+    store.commit('app/changeRouterType', 'push');
     router.push('/profile');
   }
 };

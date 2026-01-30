@@ -122,6 +122,7 @@ const onLogin = async () => {
 };
 
 const onToReg = () => {
+  store.commit('app/changeRouterType', 'push');
   router.push('/register');
 };
 </script>

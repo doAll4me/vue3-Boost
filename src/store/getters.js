@@ -1,3 +1,4 @@
+import { isMobileTerminal } from '../utils/flexible';
 // 外部供应资源
 export default {
   // 简单访问
@@ -18,5 +19,13 @@ export default {
   // token
   token: (state) => state.user.token,
   // userInfo
-  userInfo: (state) => state.user.userInfo
+  userInfo: (state) => state.user.userInfo,
+  // 路由跳转方式
+  routerType: (state) => {
+    // PC端没有跳转动画
+    if (!isMobileTerminal) {
+      return 'none';
+    }
+    return state.app.routerType;
+  }
 };
